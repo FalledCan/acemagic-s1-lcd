@@ -1,0 +1,4 @@
+# ACEMAGIC S1 front LCD: allow plugdev group to access without root
+SUBSYSTEM=="usb", ATTR{idVendor}=="04d9", ATTR{idProduct}=="fd01", MODE="0660", GROUP="plugdev"
+# ACEMAGIC S1 front LED (CH340 serial)
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", MODE="0660", GROUP="plugdev"

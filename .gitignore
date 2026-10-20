@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+preview.png
+# サイトの数字を出すスクリプトは環境ごとに違うので含めない (README 参照)
+admin_stats.php
