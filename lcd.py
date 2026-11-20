@@ -46,10 +46,14 @@ class S1LCD:
                 self.dev.detach_kernel_driver(INTERFACE)
         except (NotImplementedError, usb.core.USBError):
             pass
-        usb.util.claim_interface(self.dev, INTERFACE)
-        self.portrait = portrait
-        self.set_orientation(portrait)
-        self.heartbeat()
+        try:
+            usb.util.claim_interface(self.dev, INTERFACE)
+            self.portrait = portrait
+            self.set_orientation(portrait)
+            self.heartbeat()
+        except BaseException:
+            usb.util.dispose_resources(self.dev)
+            raise
 
     @property
     def size(self):
