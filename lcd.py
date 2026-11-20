@@ -56,7 +56,13 @@ class S1LCD:
         return (HEIGHT, WIDTH) if self.portrait else (WIDTH, HEIGHT)
 
     def _send(self, buf):
-        self.dev.write(EP_OUT, bytes(buf), timeout=1000)
+        data = bytes(buf)
+        written = self.dev.write(EP_OUT, data, timeout=1000)
+        if written != len(data):
+            raise usb.core.USBError(
+                f"Short LCD USB write: {written}/{len(data)} bytes "
+                f"on endpoint 0x{EP_OUT:02x}, header={data[:HEADER_SIZE].hex()}"
+            )
 
     def set_orientation(self, portrait):
         buf = bytearray(BUFFER_SIZE)
